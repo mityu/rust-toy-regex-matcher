@@ -12,7 +12,7 @@ pub fn parse_regex(regex: impl Into<String>) -> Ast {
     let regex = regex.into();
     let iter = regex.chars().peekable();
     let (mut iter, ast) = parse_exp(iter);
-    if let Some(_) = iter.next() {
+    if iter.next().is_some() {
         std::unreachable!();
     }
     ast
@@ -174,17 +174,11 @@ where
 }
 
 fn is_postfix_op(c: char) -> bool {
-    match c {
-        '*' | '+' | '?' => true,
-        _ => false,
-    }
+    matches!(c, '*' | '+' | '?')
 }
 
 fn is_infix_op(c: char) -> bool {
-    match c {
-        '|' => true,
-        _ => false,
-    }
+    matches!(c, '|')
 }
 
 #[cfg(test)]

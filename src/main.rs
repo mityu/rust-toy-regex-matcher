@@ -207,14 +207,14 @@ impl<'a> VM<'a> {
         Self {
             s: VMState { pc: 0, sp: 0 },
             stack: vec![],
-            inst: inst,
-            text: text,
+            inst,
+            text,
         }
     }
 
     pub fn do_match(mut self) -> bool {
         // self.stack.push(VMState { pc: 0, sp: 0 });
-        (0..self.text.len()).for_each(|sp| self.stack.push(VMState { pc: 0, sp: sp }));
+        (0..self.text.len()).for_each(|sp| self.stack.push(VMState { pc: 0, sp }));
         self.stack.reverse();
         self.try_next_thread()
     }
